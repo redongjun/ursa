@@ -1,11 +1,13 @@
 extern crate env_logger;
 extern crate log;
+extern crate chrono;
 
 use self::env_logger::Builder;
 use self::log::LevelFilter;
 use log::{Metadata, Record};
 use std::env;
 use std::io::Write;
+use self::chrono::Local;
 
 use errors::prelude::*;
 
@@ -125,7 +127,8 @@ impl HLCryptoDefaultLogger {
             .format(|buf, record| {
                 writeln!(
                     buf,
-                    "{:>5}|{:<30}|{:>35}:{:<4}| {}",
+                    "{}|{:>5}|{:<30}|{:>35}:{:<4}| {}",
+                    Local::now().format("%Y-%m-%dT%H:%M:%S"),
                     record.level(),
                     record.target(),
                     record.file().get_or_insert(""),
